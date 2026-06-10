@@ -37,26 +37,15 @@ export default function Preloader() {
             <Image src="/logo.png" alt="" width={1200} height={1200} className="object-contain scale-150" />
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 15 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
-            className="relative z-10 flex flex-col items-center"
-          >
-            <motion.div
-              initial={{ rotate: -5 }}
-              animate={{ rotate: 0 }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
-            >
-              <Image
-                src="/logo.png"
-                alt="Logo"
-                width={110}
-                height={110}
-                className="object-contain mb-8 drop-shadow-2xl"
-                priority
-              />
-            </motion.div>
+          <div className="relative z-10 flex flex-col items-center">
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              width={110}
+              height={110}
+              className="object-contain mb-8 drop-shadow-2xl"
+              priority
+            />
             
             <p className="text-[0.65rem] tracking-[0.5em] text-gold-soft mb-3 uppercase">
               The Grande
@@ -65,13 +54,8 @@ export default function Preloader() {
               BHARTIYAM
             </h1>
             
-            <motion.div 
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "80px", opacity: 1 }}
-              transition={{ duration: 1.2, delay: 0.7, ease: "easeInOut" }}
-              className="h-[1px] bg-gold mt-10"
-            />
-          </motion.div>
+            <div className="h-[1px] w-[80px] bg-gold mt-10" />
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
