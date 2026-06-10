@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/site/Navbar";
 import Footer from "@/components/site/Footer";
 import WhatsAppFloat from "@/components/site/WhatsAppFloat";
+import Preloader from "@/components/site/Preloader";
 import { SITE } from "@/lib/site-data";
 
 const playfair = Playfair_Display({
@@ -50,6 +51,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${inter.variable}`}>
       <body>
+        <Preloader />
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
