@@ -37,30 +37,12 @@ export default function Preloader() {
             <Image src="/logo.png" alt="" width={1200} height={1200} className="object-contain scale-150" />
           </div>
 
-          <style>{`
-            @keyframes pulseLogo {
-              0%, 100% { transform: scale(1); }
-              50% { transform: scale(1.08); }
-            }
-            @keyframes expandLine {
-              0% { width: 0; opacity: 0; }
-              100% { width: 80px; opacity: 1; }
-            }
-            .animate-logo-pulse {
-              animation: pulseLogo 2s ease-in-out infinite;
-            }
-            .animate-line-expand {
-              width: 0; /* start at 0 before animation */
-              animation: expandLine 1.5s ease-in-out 0.3s forwards;
-            }
-          `}</style>
-
           <div className="relative z-10 flex flex-col items-center">
             <Image
               src="/logo.png"
               alt="Logo"
-              width={110}
-              height={110}
+              width={140}
+              height={140}
               className="object-contain mb-8 drop-shadow-2xl animate-logo-pulse"
               priority
             />

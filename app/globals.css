@@ -149,3 +149,20 @@
   to { transform: translateX(-50%); }
 }
 .marquee { animation: marquee-x 40s linear infinite; }
+
+/* Preloader Animations */
+@keyframes pulseLogo {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+@keyframes expandLine {
+  0% { width: 0; opacity: 0; }
+  100% { width: 80px; opacity: 1; }
+}
+.animate-logo-pulse {
+  animation: pulseLogo 2s ease-in-out infinite;
+}
+.animate-line-expand {
+  width: 0;
+  animation: expandLine 1.5s ease-in-out 0.3s forwards;
+}
