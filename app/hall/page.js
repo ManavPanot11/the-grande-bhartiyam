@@ -38,7 +38,6 @@ export default function HallPage() {
             <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-y-5 gap-x-6">
               {[
                 { i: Maximize2, l: "Area", v: "1800 sq feet" },
-                { i: Maximize2, l: "Floor Area", v: "18,000 sq ft" },
                 { i: Music, l: "AV & Sound", v: "Pro-grade" },
                 { i: UtensilsCrossed, l: "Live Counters", v: "12+" },
                 { i: Sparkles, l: "Pre-Function", v: "Courtyard" },

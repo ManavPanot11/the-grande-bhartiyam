@@ -22,7 +22,7 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 border-b ${
-        scrolled
+        scrolled || open
           ? "bg-ivory/85 backdrop-blur-md border-gold/20 shadow-soft"
           : "bg-transparent border-transparent"
       }`}
@@ -38,10 +38,10 @@ export default function Navbar() {
             className="object-contain group-hover:scale-110 transition-transform duration-700"
           />
           <div className="flex flex-col leading-tight">
-            <span className={`font-serif text-[0.62rem] tracking-[0.4em] ${scrolled ? "text-gold-deep" : "text-gold-soft"}`}>
+            <span className={`font-serif text-[0.62rem] tracking-[0.4em] ${scrolled || open ? "text-gold-deep" : "text-gold-soft"}`}>
               THE GRANDE
             </span>
-            <span className={`font-display text-xl sm:text-2xl tracking-[0.18em] -mt-0.5 ${scrolled ? "text-warmbrown-deep" : "text-cream"}`}>
+            <span className={`font-display text-xl sm:text-2xl tracking-[0.18em] -mt-0.5 ${scrolled || open ? "text-warmbrown-deep" : "text-cream"}`}>
               BHARTIYAM
             </span>
           </div>
@@ -88,7 +88,7 @@ export default function Navbar() {
         <button
           aria-label="Toggle menu"
           onClick={() => setOpen((v) => !v)}
-          className={`lg:hidden p-2 rounded-md ${scrolled ? "text-warmbrown-deep" : "text-cream"}`}
+          className={`lg:hidden p-2 rounded-md ${scrolled || open ? "text-warmbrown-deep" : "text-cream"}`}
         >
           {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
