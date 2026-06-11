@@ -125,15 +125,10 @@ function AboutSection() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-7 text-warmbrown/85 leading-relaxed text-[1.02rem]">
-              Nestled within a courtyard of jaali-screened arches and lantern-lit
-              corridors, The Grande Bhartiyam is a love letter to India’s heritage.
-              Brass chandeliers, hand-carved sandstone columns and warm cream tones
-              create an atmosphere where every ceremony feels timeless.
+              Located right in the heart of the city, The Grande Bhartiyam seamlessly blends modern aesthetics with rich Indian heritage to create an exceptional venue for your most important gatherings. Designed as a grand, standalone venue, it features an expansive, state-of-the-art hall called The Mandapam, which is a comfortable space for our guests.
             </p>
             <p className="mt-4 text-warmbrown/85 leading-relaxed text-[1.02rem]">
-              Whether you are exchanging vows, hosting a kathak evening or simply
-              retreating into one of our twelve boutique rooms, our team welcomes
-              you with the warmth of an old family home.
+              Whether you are hosting high-profile corporate events or celebrating cherished family functions, this premium multi-purpose space delivers the perfect atmosphere of sophistication and cultural pride.
             </p>
           </Reveal>
           <Reveal delay={0.2}>
