@@ -3,12 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Star, Sparkles, Bed, Trees, Utensils, Car, Wifi, ChevronRight } from "lucide-react";
+import { ArrowRight, Star, Sparkles, Bed, Trees, Utensils, Car, Wifi, ChevronRight, MapPin } from "lucide-react";
 import { IMG, SITE, ROOMS, AMENITIES, EVENT_TYPES, TESTIMONIALS, GALLERY, waLink } from "@/lib/site-data";
 import { MotifDivider, MotifMandala, MotifArch } from "@/components/site/Motif";
 import { Reveal, FadeIn, Stagger, itemVariants } from "@/components/site/Reveal";
 
-const iconMap = { sparkles: Sparkles, trees: Trees, bed: Bed, utensils: Utensils, car: Car, wifi: Wifi };
+const iconMap = { sparkles: Sparkles, trees: Trees, bed: Bed, utensils: Utensils, car: Car, wifi: Wifi, "map-pin": MapPin };
 
 function Hero() {
   const slides = IMG.hero;
@@ -414,7 +414,7 @@ function ContactCTA() {
             Our concierge will craft a heritage tour tailored to your celebration — weddings, soirées or stays.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-            <a href={waLink()} target="_blank" rel="noreferrer" className="btn-gold">Book via WhatsApp <ArrowRight className="w-4 h-4" /></a>
+            <a href={waLink("Hello, I would like to book a heritage tour at THE GRANDE BHARTIYAM.")} target="_blank" rel="noreferrer" className="btn-gold">Book via WhatsApp <ArrowRight className="w-4 h-4" /></a>
             <Link href="/contact" className="btn-outline">Contact Concierge</Link>
           </div>
         </Reveal>
