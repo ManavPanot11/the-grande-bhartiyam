@@ -14,7 +14,7 @@ export default function HallPage() {
       <PageHero
         eyebrow="The Featured Hall"
         title={<>The <span className="italic text-gradient-gold">Mandapam</span></>}
-        subtitle="A majestic 1,200–1,400 guest banquet — cinematic ceilings, brass chandeliers and traditional jaali screens."
+        subtitle="A majestic 1800 sq feet banquet — cinematic ceilings, brass chandeliers and traditional jaali screens."
         image={IMG.mandap[0]}
       />
 
@@ -37,7 +37,7 @@ export default function HallPage() {
 
             <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-y-5 gap-x-6">
               {[
-                { i: Users, l: "Capacity", v: "1200–1400" },
+                { i: Maximize2, l: "Area", v: "1800 sq feet" },
                 { i: Maximize2, l: "Floor Area", v: "18,000 sq ft" },
                 { i: Music, l: "AV & Sound", v: "Pro-grade" },
                 { i: UtensilsCrossed, l: "Live Counters", v: "12+" },

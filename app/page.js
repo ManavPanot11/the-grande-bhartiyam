@@ -135,7 +135,7 @@ function AboutSection() {
             <div className="mt-8 grid grid-cols-3 gap-6">
               {[
                 { n: "12", l: "Boutique Rooms" },
-                { n: "1400", l: "Guest Capacity" },
+                { n: "1800", l: "Sq Feet" },
                 { n: "24×7", l: "Concierge" },
               ].map((s) => (
                 <div key={s.l} className="text-center">
@@ -206,11 +206,11 @@ function FeaturedHall() {
             <p className="mt-6 text-cream/80 text-lg max-w-xl leading-relaxed">
               A majestic banquet hall with soaring ceilings, traditional jaali
               screens and a stage that has hosted vows, ragas and grand
-              receptions alike. 1,200–1,400 guests welcomed in heritage style.
+              receptions alike. An 1800 sq feet space welcoming guests in heritage style.
             </p>
             <div className="mt-8 grid grid-cols-3 gap-6 max-w-md">
               {[
-                { n: "1400", l: "Capacity" },
+                { n: "1800", l: "Sq Feet" },
                 { n: "4K", l: "AV & Sound" },
                 { n: "24×7", l: "Service" },
               ].map((s) => (
