@@ -21,10 +21,10 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 border-b ${
         scrolled
-          ? "bg-ivory/85 backdrop-blur-md border-b border-gold/20 shadow-soft"
-          : "bg-transparent"
+          ? "bg-ivory/85 backdrop-blur-md border-gold/20 shadow-soft"
+          : "bg-transparent border-transparent"
       }`}
     >
       <div className="container-luxe flex items-center justify-between h-20 gap-10">
