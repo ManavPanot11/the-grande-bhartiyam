@@ -51,7 +51,7 @@
 
 @layer base {
   * { @apply border-border; }
-  html { scroll-behavior: smooth; scrollbar-gutter: stable; }
+  html { scroll-behavior: smooth; }
   body {
     @apply bg-background text-foreground font-sans antialiased;
     background-image:
