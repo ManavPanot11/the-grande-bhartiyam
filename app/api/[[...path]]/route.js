@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb'
 import { v4 as uuidv4 } from 'uuid'
 import { NextResponse } from 'next/server'
+import { z } from 'zod'
 
 // MongoDB connection
 let client
@@ -17,11 +18,12 @@ async function connectToMongo() {
 
 // Helper function to handle CORS
 function handleCORS(response) {
-  response.headers.set('Access-Control-Allow-Origin', process.env.CORS_ORIGINS || '*')
-  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  response.headers.set('Access-Control-Allow-Credentials', 'true')
-  return response
+  const allowedOrigin = process.env.CORS_ORIGINS || 'https://thegrandebhartiyam.com';
+  response.headers.set('Access-Control-Allow-Origin', allowedOrigin);
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  response.headers.set('Access-Control-Allow-Credentials', 'true');
+  return response;
 }
 
 // OPTIONS handler for CORS
@@ -51,16 +53,22 @@ async function handleRoute(request, { params }) {
     if (route === '/status' && method === 'POST') {
       const body = await request.json()
       
-      if (!body.client_name) {
+      const statusSchema = z.object({
+        client_name: z.string().min(1, "client_name is required").max(100, "client_name is too long")
+      });
+
+      const parsed = statusSchema.safeParse(body);
+      
+      if (!parsed.success) {
         return handleCORS(NextResponse.json(
-          { error: "client_name is required" }, 
+          { error: parsed.error.errors[0].message }, 
           { status: 400 }
         ))
       }
 
       const statusObj = {
         id: uuidv4(),
-        client_name: body.client_name,
+        client_name: parsed.data.client_name,
         timestamp: new Date()
       }
 
