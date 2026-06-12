@@ -26,6 +26,7 @@ export default function Navbar() {
           ? "bg-ivory/85 backdrop-blur-md border-gold/20 shadow-soft"
           : "bg-transparent border-transparent"
       }`}
+      style={{ paddingRight: "var(--scrollbar-compensation, 0px)" }}
     >
       <div className="container-luxe flex items-center justify-between h-20 gap-10">
         {/* Logo */}

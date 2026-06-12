@@ -18,6 +18,7 @@ export default function WhatsAppFloat() {
       className={`fixed bottom-6 right-6 z-50 group transition-all duration-700 ${
         show ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
       }`}
+      style={{ marginRight: "var(--scrollbar-compensation, 0px)" }}
     >
       <span className="absolute inset-0 rounded-full bg-emerald/30 animate-ping" />
       <span className="relative flex items-center p-3 rounded-full bg-[#25D366] text-white shadow-luxe hover:bg-[#1ebe5d] transition-colors">
