@@ -7,24 +7,13 @@ export default function Preloader() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Calculate scrollbar width to prevent layout shift
-    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    
-    // Lock scrolling while loading and apply compensation padding
-    document.body.style.paddingRight = `${scrollbarWidth}px`;
-    document.body.style.overflow = "hidden";
-    
     // Hide the preloader after a beautifully timed delay
     const timer = setTimeout(() => {
       setLoading(false);
-      document.body.style.paddingRight = "";
-      document.body.style.overflow = "";
     }, 2800);
     
     return () => {
       clearTimeout(timer);
-      document.body.style.paddingRight = "";
-      document.body.style.overflow = "";
     };
   }, []);
 
