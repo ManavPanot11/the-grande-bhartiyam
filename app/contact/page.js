@@ -1,19 +1,37 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { MapPin, Phone, Mail, MessageCircle, Send, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, MessageCircle, Send, Clock, CalendarIcon } from "lucide-react";
 import PageHero from "@/components/site/PageHero";
 import { Reveal } from "@/components/site/Reveal";
 import { MotifDivider } from "@/components/site/Motif";
 import { IMG, SITE, waLink } from "@/lib/site-data";
+import { cn } from "@/lib/utils";
+import { format, startOfDay } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "Hall", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "+91 ", subject: "Hall", fromDate: undefined, toDate: undefined, message: "" });
 
   const onChange = (e) => setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const onDateChange = (name, date) => {
+    setForm((f) => {
+      const updated = { ...f, [name]: date };
+      if (name === "fromDate" && updated.toDate && date > updated.toDate) {
+        updated.toDate = undefined;
+      }
+      return updated;
+    });
+  };
   const onSubmit = (e) => {
     e.preventDefault();
-    const msg = `Hello, this is ${form.name || "a guest"} (${form.email}${form.phone ? ", " + form.phone : ""}).\nInquiry: ${form.subject}.\n\n${form.message}`;
+    const fromStr = form.fromDate ? format(form.fromDate, "PP") : "N/A";
+    const toStr = form.toDate ? format(form.toDate, "PP") : "N/A";
+    let msg = `Hello, I would like to inquire about a booking. Here are my details:\n\n• Name: ${form.name || "Guest"}\n• Email: ${form.email}\n• Phone: ${form.phone}\n• Type: ${form.subject}\n• Dates: ${fromStr} to ${toStr}`;
+    if (form.message && form.message.trim() !== "") {
+      msg += `\n• Message: ${form.message}`;
+    }
     window.open(waLink(msg), "_blank");
   };
 
@@ -112,9 +130,72 @@ export default function ContactPage() {
                     <option>General Inquiry</option>
                   </select>
                 </div>
+                <div className="sm:col-span-1 flex flex-col justify-end">
+                  <label className="text-[0.7rem] uppercase tracking-[0.25em] text-warmbrown/70 mb-2">From Date</label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        className={cn(
+                          "w-full px-4 py-3 rounded-lg bg-cream/40 border border-gold/20 focus:border-emerald focus:ring-2 focus:ring-emerald/30 outline-none transition text-left flex items-center justify-between",
+                          !form.fromDate && "text-warmbrown/50"
+                        )}
+                      >
+                        {form.fromDate ? format(form.fromDate, "PPP") : <span>Select date</span>}
+                        <CalendarIcon className="h-4 w-4 opacity-50" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 rounded-2xl border-gold/20 shadow-luxe bg-ivory" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={form.fromDate}
+                        onSelect={(date) => onDateChange("fromDate", date)}
+                        disabled={(date) => date < startOfDay(new Date())}
+                        initialFocus
+                        captionLayout="dropdown"
+                        startMonth={new Date(new Date().getFullYear(), 0)}
+                        endMonth={new Date(new Date().getFullYear() + 5, 11)}
+                        className="bg-ivory text-warmbrown-deep"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div className="sm:col-span-1 flex flex-col justify-end">
+                  <label className="text-[0.7rem] uppercase tracking-[0.25em] text-warmbrown/70 mb-2">To Date</label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        disabled={!form.fromDate}
+                        className={cn(
+                          "w-full px-4 py-3 rounded-lg bg-cream/40 border border-gold/20 focus:border-emerald focus:ring-2 focus:ring-emerald/30 outline-none transition text-left flex items-center justify-between",
+                          !form.toDate && "text-warmbrown/50",
+                          !form.fromDate && "opacity-50 cursor-not-allowed"
+                        )}
+                      >
+                        {form.toDate ? format(form.toDate, "PPP") : <span>Select date</span>}
+                        <CalendarIcon className="h-4 w-4 opacity-50" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 rounded-2xl border-gold/20 shadow-luxe bg-ivory" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={form.toDate}
+                        onSelect={(date) => onDateChange("toDate", date)}
+                        disabled={(date) => form.fromDate ? date < startOfDay(form.fromDate) : date < startOfDay(new Date())}
+                        defaultMonth={form.fromDate || new Date()}
+                        initialFocus
+                        captionLayout="dropdown"
+                        startMonth={new Date(new Date().getFullYear(), 0)}
+                        endMonth={new Date(new Date().getFullYear() + 5, 11)}
+                        className="bg-ivory text-warmbrown-deep"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
                 <div className="sm:col-span-2">
                   <label className="text-[0.7rem] uppercase tracking-[0.25em] text-warmbrown/70">Message</label>
-                  <textarea required name="message" value={form.message} onChange={onChange} rows={5} className="mt-2 w-full px-4 py-3 rounded-lg bg-cream/40 border border-gold/20 focus:border-emerald focus:ring-2 focus:ring-emerald/30 outline-none transition" placeholder="Tell us about your celebration, expected dates and guest count…" />
+                  <textarea name="message" value={form.message} onChange={onChange} rows={5} className="mt-2 w-full px-4 py-3 rounded-lg bg-cream/40 border border-gold/20 focus:border-emerald focus:ring-2 focus:ring-emerald/30 outline-none transition" placeholder="Tell us about your celebration and guest count…" />
                 </div>
                 <div className="sm:col-span-2 flex flex-wrap gap-3 mt-2">
                   <button type="submit" className="btn-primary"><Send className="w-4 h-4" /> Send via WhatsApp</button>

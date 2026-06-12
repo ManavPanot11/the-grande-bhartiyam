@@ -51,13 +51,18 @@
 
 @layer base {
   * { @apply border-border; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scrollbar-gutter: stable; }
   body {
     @apply bg-background text-foreground font-sans antialiased;
     background-image:
       radial-gradient(at 10% 0%, rgba(184, 146, 61, 0.06) 0px, transparent 50%),
       radial-gradient(at 90% 100%, rgba(11, 93, 59, 0.05) 0px, transparent 50%);
     background-attachment: fixed;
+  }
+  body[data-scroll-locked] {
+    overflow-y: scroll !important;
+    padding-right: 0 !important;
+    margin-right: 0 !important;
   }
   h1, h2, h3, h4, h5 { @apply font-serif tracking-tight; }
 }

@@ -93,9 +93,12 @@ export default function Footer() {
 
       <MotifDivider className="text-gold opacity-70" />
 
-      <div className="container-luxe py-7 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-cream/55">
-        <p>© {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>
-        <p className="tracking-[0.25em] uppercase">Crafted with Heritage · Hosted with Heart</p>
+      <div className="container-luxe py-7 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-cream/55 text-center md:text-left">
+        <p className="flex-1">© {new Date().getFullYear()} {SITE.name}. All rights reserved.</p>
+        <p className="flex-none tracking-widest text-[0.65rem]">
+          Developed by <a href="https://www.instagram.com/manav_panot" target="_blank" rel="noreferrer" className="text-gold hover:text-cream transition-colors underline underline-offset-4 decoration-gold/30 hover:decoration-cream/50">@manav_panot</a> With 🤍
+        </p>
+        <p className="flex-1 md:text-right tracking-[0.25em] uppercase">Crafted with Heritage · Hosted with Heart</p>
       </div>
     </footer>
   );

@@ -61,17 +61,15 @@ function Calendar({
           defaultClassNames.month_caption
         ),
         dropdowns: cn(
-          "flex h-[--cell-size] w-full items-center justify-center gap-1.5 text-sm font-medium",
+          "flex justify-center gap-2 text-sm font-medium text-warmbrown-deep",
           defaultClassNames.dropdowns
         ),
         dropdown_root: cn(
-          "has-focus:border-ring border-input shadow-xs has-focus:ring-ring/50 has-focus:ring-[3px] relative rounded-md border",
+          "relative rounded-md border border-gold/30 bg-cream/50 px-2 py-1 flex items-center hover:bg-cream",
           defaultClassNames.dropdown_root
         ),
-        dropdown: cn("absolute inset-0 opacity-0", defaultClassNames.dropdown),
-        caption_label: cn("select-none font-medium", captionLayout === "label"
-          ? "text-sm"
-          : "[&>svg]:text-muted-foreground flex h-8 items-center gap-1 rounded-md pl-2 pr-1 text-sm [&>svg]:size-3.5", defaultClassNames.caption_label),
+        dropdown: cn("bg-transparent outline-none appearance-none cursor-pointer pr-4 font-medium [&>option]:bg-cream [&>option]:text-warmbrown-deep", defaultClassNames.dropdown),
+        caption_label: cn("select-none font-medium", captionLayout === "dropdown" || captionLayout === "dropdown-buttons" ? "hidden" : "", defaultClassNames.caption_label),
         table: "w-full border-collapse",
         weekdays: cn("flex", defaultClassNames.weekdays),
         weekday: cn(
@@ -92,7 +90,7 @@ function Calendar({
         range_middle: cn("rounded-none", defaultClassNames.range_middle),
         range_end: cn("bg-accent rounded-r-md", defaultClassNames.range_end),
         today: cn(
-          "bg-accent text-accent-foreground rounded-md data-[selected=true]:rounded-none",
+          "text-gold font-bold",
           defaultClassNames.today
         ),
         outside: cn(
@@ -129,6 +127,73 @@ function Calendar({
             </td>
           );
         },
+        Dropdown: ({ value, onChange, options, children, ...props }) => {
+          const selectOptions = options || React.Children.toArray(children).map(child => ({
+            value: child.props.value?.toString(),
+            label: child.props.children,
+            disabled: child.props.disabled
+          }));
+          const [isOpen, setIsOpen] = React.useState(false);
+          const dropdownRef = React.useRef(null);
+
+          React.useEffect(() => {
+            const handleClickOutside = (event) => {
+              if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+              }
+            };
+            document.addEventListener("mousedown", handleClickOutside);
+            return () => document.removeEventListener("mousedown", handleClickOutside);
+          }, []);
+
+          return (
+            <div className="relative" ref={dropdownRef}>
+              <Button 
+                variant="ghost" 
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setIsOpen(!isOpen);
+                }}
+                className="h-8 w-fit bg-cream/50 border-gold/30 text-warmbrown-deep font-medium hover:bg-cream rounded-md px-2 gap-1 focus:ring-0 shadow-none"
+              >
+                {selectOptions.find(o => o.value?.toString() === value?.toString())?.label || props["aria-label"]}
+                <ChevronDownIcon className="h-4 w-4 opacity-50" />
+              </Button>
+              
+              {isOpen && (
+                <div className="absolute z-[100] top-full mt-1 left-0 min-w-[5rem] max-h-[300px] overflow-y-auto rounded-xl border border-gold/20 shadow-luxe bg-ivory text-warmbrown-deep flex flex-col p-1">
+                  {selectOptions.map((opt) => (
+                    <button
+                      key={opt.value}
+                      disabled={opt.disabled}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (onChange) {
+                          onChange({ 
+                            target: { value: opt.value?.toString() },
+                            currentTarget: { value: opt.value?.toString() },
+                            preventDefault: () => {},
+                            stopPropagation: () => {}
+                          });
+                        }
+                        setIsOpen(false);
+                      }}
+                      className={cn(
+                        "w-full rounded-lg px-2 py-1.5 text-sm font-medium hover:bg-cream hover:text-emerald focus:bg-cream focus:text-emerald text-left whitespace-nowrap",
+                        opt.value?.toString() === value?.toString() && "bg-cream text-emerald font-bold",
+                        opt.disabled && "opacity-50 cursor-not-allowed"
+                      )}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )
+        },
         ...components,
       }}
       {...props} />
@@ -164,7 +229,7 @@ function CalendarDayButton({
       data-range-end={modifiers.range_end}
       data-range-middle={modifiers.range_middle}
       className={cn(
-        "data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground group-data-[focused=true]/day:border-ring group-data-[focused=true]/day:ring-ring/50 flex aspect-square h-auto w-full min-w-[--cell-size] flex-col gap-1 font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 group-data-[focused=true]/day:ring-[3px] [&>span]:text-xs [&>span]:opacity-70",
+        "data-[selected-single=true]:bg-primary data-[selected-single=true]:text-primary-foreground data-[range-middle=true]:bg-accent data-[range-middle=true]:text-accent-foreground data-[range-start=true]:bg-primary data-[range-start=true]:text-primary-foreground data-[range-end=true]:bg-primary data-[range-end=true]:text-primary-foreground flex aspect-square h-auto w-full min-w-[--cell-size] flex-col gap-1 font-normal leading-none data-[range-end=true]:rounded-md data-[range-middle=true]:rounded-none data-[range-start=true]:rounded-md group-data-[focused=true]/day:relative group-data-[focused=true]/day:z-10 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&>span]:text-xs [&>span]:opacity-70",
         defaultClassNames.day,
         className
       )}
